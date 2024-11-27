@@ -92,11 +92,11 @@ For demonstration purposes, you can modify `ComputeTotalWithoutZero` to return a
                 Error Trace:    order_test.go:61
                 Error:          An error is expected but got nil.
 FAIL
-
+```
 
 ### Run Tests
 
 To run the tests:
 
-bash
+```bash
 go test -v ./...

@@ -44,6 +44,12 @@ func (o Order) ComputeTotalWithoutZero() (*money.Money, error) {
 		return money.New(0, o.CurrencyAlphaCode), nil
 	}
 
+	// // Check if the order contains no items.
+	// // Ensures an error is raised with a message unlike in the case above.
+	// if len(o.Items) == 0 {
+	//     return nil, fmt.Errorf("order contains no items")
+	// }
+
 	amount := money.New(0, o.CurrencyAlphaCode)
 	for _, item := range o.Items {
 		var err error
