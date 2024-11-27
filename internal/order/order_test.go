@@ -54,10 +54,12 @@ func TestComputeTotalWithoutZero_EmptyOrder(t *testing.T) {
 	o := Order{
 		ID:                "46",
 		CurrencyAlphaCode: "USD",
-		Items:             []Item{}, // No items
+		Items:             []Item{}, // Empty order
 	}
 
 	total, err := o.ComputeTotalWithoutZero()
-	assert.Error(t, err) // Expect an error
-	assert.Nil(t, total) // Total should be nil
+
+	// The test expects an error but won't get one
+	assert.Error(t, err, "An error was expected but not received")
+	assert.Nil(t, total, "Total should be nil for an empty order")
 }

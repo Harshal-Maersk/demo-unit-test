@@ -37,14 +37,13 @@ func (o Order) ComputeTotalWithZero() (*money.Money, error) {
 	return amount, nil
 }
 
-// ComputeTotalWithoutZero returns an error if the order has no items.
+// ComputeTotalWithoutZero returns an incorrect behavior for demonstration purposes.
 func (o Order) ComputeTotalWithoutZero() (*money.Money, error) {
-	// If the Items list is empty, return an error
 	if len(o.Items) == 0 {
-		return nil, fmt.Errorf("order contains no items")
+		// Simulate incorrect behavior by returning a zero total instead of an error
+		return money.New(0, o.CurrencyAlphaCode), nil
 	}
 
-	// Initialize total amount
 	amount := money.New(0, o.CurrencyAlphaCode)
 	for _, item := range o.Items {
 		var err error

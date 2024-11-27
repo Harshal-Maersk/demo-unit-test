@@ -18,24 +18,21 @@ Unit testing is a software testing method where individual units or components o
 
 2. **Check if All Scenarios Are Covered**  
    Compare the function's behavior with expected outcomes for all possible scenarios:
-   - If the function already handles a case correctly (like empty orders in this example), simply write a test case to confirm that behavior.
-   - If the function doesn't handle a case (e.g., inconsistent currency codes in the item list), it’s your responsibility as a tester to identify and report this gap to the developer.
+   - If the function already handles a case correctly (like empty orders in this example), write a test case to confirm that behavior.
+   - If the function doesn't handle a case (e.g., inconsistent currency codes in the item list), write tests to highlight these gaps.
 
 3. **Write Thorough Tests**  
    For each scenario, include:
-   - **Input**: What data is being tested? (e.g., empty list, zero quantity).
-   - **Output**: What result do you expect? (e.g., total = 0).
-   - **Edge Cases**: What unexpected but possible situations should the code handle gracefully? (e.g., `UnitPrice` is `nil`).
+   - **Input**: The data being tested (e.g., empty list, zero quantity).
+   - **Output**: The expected result (e.g., total = 0, or error message).
+   - **Edge Cases**: Unexpected but possible situations (e.g., `nil` prices or missing items).
 
 4. **Ensure the Code Matches the Tests**  
    - After writing test cases, run them against the function.
-   - If the code passes all tests, it’s handling the scenarios correctly.
-   - If a test fails, review the code and suggest necessary changes to the programmer.
+   - If a test fails, review the code and suggest necessary changes.
 
 5. **Iterate and Refine**  
-   Testing isn’t just about covering known cases—it’s also about anticipating future changes. Once a function’s behavior is covered:
-   - Think about what might change in future versions.
-   - Make your tests robust enough to catch regressions (breaking old functionality while adding new features).
+   Testing isn’t just about current cases—it’s about anticipating future changes. Write tests robust enough to catch regressions when updating the codebase.
 
 ---
 
@@ -59,28 +56,47 @@ This project defines:
 
 ### Functions:
 
-1. **ComputeTotalWithZero**:
-   - Returns a total of `0` if the order has no items.
-   - Ensures the program continues without errors in such cases.
+1. **ComputeTotalWithZero**:  
+   - Returns a total of `0` if the order has no items.  
+   - Ensures the program continues gracefully without errors in such cases.
 
-2. **ComputeTotalWithoutZero**:
-   - Throws an error if the order has no items.
-   - Highlights how such edge cases could break functionality if not handled.
+2. **ComputeTotalWithoutZero**:  
+   - Throws an error if the order has no items.  
+   - Demonstrates how edge cases like empty orders should be explicitly handled.
 
 ---
 
-## Tests
+## Unit Tests
 
 Unit tests validate the behavior of the `ComputeTotalWithZero` and `ComputeTotalWithoutZero` functions. The tests cover:
 
-1. **Valid Order**: A single item with a known quantity and unit price.
-2. **Empty Order**:
-   - For `ComputeTotalWithZero`: The total should be `0` without errors.
-   - For `ComputeTotalWithoutZero`: An error should be raised with the message "order contains no items."
+### Scenarios:
+
+1. **Valid Order**:  
+   - Single item with a known quantity and unit price.  
+   - Verifies total calculation accuracy.
+
+2. **Empty Order**:  
+   - For `ComputeTotalWithZero`: Verifies that the total is `0` without errors.  
+   - For `ComputeTotalWithoutZero`: Ensures an error is raised with the message "order contains no items."
+
+### Example: Intentionally Failing Test
+
+For demonstration purposes, you can modify `ComputeTotalWithoutZero` to return a `0` total for empty orders instead of an error. The corresponding test case would fail, highlighting the incorrect behavior.
+
+#### Example of a Failing Test Output:
+
+```text
+=== RUN   TestComputeTotalWithoutZero_EmptyOrder
+    order_test.go:61:
+                Error Trace:    order_test.go:61
+                Error:          An error is expected but got nil.
+FAIL
+
 
 ### Run Tests
 
 To run the tests:
 
-```bash
+bash
 go test -v ./...
